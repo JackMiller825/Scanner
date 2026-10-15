@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { decodeBytes, decodeUint } from "../src/shared/abi.ts";
 import { interpretBlockaid } from "../src/shared/blockaid.ts";
 import { interpretDextools } from "../src/shared/dextools.ts";
 import { interpretGoPlus } from "../src/shared/goplus.ts";
@@ -132,6 +133,13 @@ test("detects a changed provider result and redacts secret-like fields", () => {
     nested: { access_token: "[redacted]" },
     name: "Visible",
   });
+});
+
+test("decodes ERC-20 name and supply words without a Node buffer", () => {
+  const symbol = `${Buffer.from("SIELON").toString("hex").padEnd(64, "0")}`;
+  assert.equal(decodeBytes(symbol), "SIELON");
+  assert.equal(decodeUint("0x0a"), 10n);
+  assert.equal(decodeBytes("0x"), null);
 });
 
 test("parses GoPlus fractions and ignores informational-only findings in the status", () => {

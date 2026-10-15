@@ -47,7 +47,6 @@ export function RiskApp() {
   useEffect(() => {
     void checkHealth().then((ok) => {
       setServiceDown(!ok);
-      if (!ok) return;
       void loadIntegrations().then(setIntegrations).catch(() => setServiceDown(true));
       void loadHistory(DEFAULT_ADDRESS, DEFAULT_CHAIN_ID).then(setHistory).catch(() => undefined);
     });
@@ -169,7 +168,7 @@ export function RiskApp() {
             <button className="button secondary" type="button" onClick={() => void copyAddress()}>{copied ? "Copied" : "Copy"}</button>
           </div>
         </form>
-        {serviceDown ? <p className="error-banner">The scan service is not running. Start it with npm run dev. Link-out cards still open the official pages.</p> : null}
+        {serviceDown ? <p className="meta-line">GoPlus and Honeypot.is run in this browser. Providers that need an API key stay Not configured on this published page.</p> : null}
         {error ? <p className="error-banner" role="alert">{error}</p> : null}
       </header>
 

@@ -1,3 +1,4 @@
+import { decodeBytes, decodeUint } from "../src/shared/abi.ts";
 import type { Network } from "../src/shared/networks.ts";
 import type { TokenMetadata } from "../src/shared/types.ts";
 import { formatSupply } from "../src/shared/text.ts";
@@ -15,40 +16,6 @@ export class RpcError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "RpcError";
-  }
-}
-
-function decodeBytes(hex: string): string | null {
-  const data = hex.startsWith("0x") ? hex.slice(2) : hex;
-  if (!data || /^0+$/.test(data)) return null;
-  try {
-    if (data.length === 64) {
-      const bytes = Buffer.from(data, "hex");
-      const end = bytes.indexOf(0);
-      const text = bytes.subarray(0, end === -1 ? undefined : end).toString("utf8").trim();
-      return text || null;
-    }
-    if (data.length < 128) return null;
-    const offset = Number(BigInt(`0x${data.slice(0, 64)}`));
-    const lengthStart = offset * 2;
-    if (lengthStart + 64 > data.length) return null;
-    const length = Number(BigInt(`0x${data.slice(lengthStart, lengthStart + 64)}`));
-    if (!Number.isFinite(length) || length < 0 || length > 256) return null;
-    const start = lengthStart + 64;
-    const text = Buffer.from(data.slice(start, start + length * 2), "hex").toString("utf8").replace(/\0/g, "").trim();
-    return text || null;
-  } catch {
-    return null;
-  }
-}
-
-function decodeUint(hex: string): bigint | null {
-  const data = hex.startsWith("0x") ? hex.slice(2) : hex;
-  if (!data || /^0*$/.test(data)) return 0n;
-  try {
-    return BigInt(`0x${data.slice(0, 64)}`);
-  } catch {
-    return null;
   }
 }
 

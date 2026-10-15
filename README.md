@@ -18,7 +18,7 @@ npm run test
 npm run build
 ```
 
-`npm run dev` and `npm run preview` host `/api/scan`. GitHub Pages publishes the static console at `https://jackmiller825.github.io/Scanner/` and cannot run the scanners.
+`npm run dev` and `npm run preview` host `/api/scan`. GitHub Pages publishes the console at `https://jackmiller825.github.io/Scanner/`. On that page, GoPlus and Honeypot.is are called from the browser. Providers that need an API key stay Not configured.
 
 Copy `.env.example` to `.env` and supply only the keys you have. Empty providers stay **Not configured** or **Manual / link-out only**. Details are in `INTEGRATIONS.md`.
 
