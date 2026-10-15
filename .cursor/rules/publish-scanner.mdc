@@ -1,0 +1,16 @@
+---
+description: Push codebase updates to JackMiller825/Scanner and publish GitHub Pages
+alwaysApply: true
+---
+
+# Publish to Scanner
+
+When the codebase changes as part of a requested update, commit that update, push `main` to `https://github.com/JackMiller825/Scanner.git`, and let the GitHub Pages workflow publish it.
+
+- `origin` is `https://github.com/JackMiller825/Scanner.git`.
+- This repository and its GitHub Pages site contain only the Token Risk Console.
+- Do not commit or push the FOMO marketing site.
+- Do not force-push `main`.
+- Do not commit `.env`, API keys, wallet credentials, or `data/`.
+- Keep the Vite `base` at `/Scanner/` so Pages assets resolve at `https://jackmiller825.github.io/Scanner/`.
+- The published root page is the console. GitHub Pages serves the static site only. Live scanner calls stay on `npm run dev` or `npm run preview`.
